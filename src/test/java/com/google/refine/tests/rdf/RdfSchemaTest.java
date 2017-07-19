@@ -10,13 +10,13 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 import com.google.refine.util.ParsingUtilities;
-import com.google.refine.rdf.CellLiteralNode;
-import com.google.refine.rdf.CellResourceNode;
-import com.google.refine.rdf.Link;
-import com.google.refine.rdf.Node;
-import com.google.refine.rdf.RdfSchema;
-import com.google.refine.rdf.ResourceNode;
-import com.google.refine.rdf.ResourceNode.RdfType;
+import org.deri.grefine.rdf.CellLiteralNode;
+import org.deri.grefine.rdf.CellResourceNode;
+import org.deri.grefine.rdf.Link;
+import org.deri.grefine.rdf.Node;
+import org.deri.grefine.rdf.RdfSchema;
+import org.deri.grefine.rdf.ResourceNode;
+import org.deri.grefine.rdf.ResourceNode.RdfType;
 
 public class RdfSchemaTest {
 

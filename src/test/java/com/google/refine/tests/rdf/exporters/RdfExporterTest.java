@@ -26,11 +26,11 @@ import com.google.refine.model.Column;
 import com.google.refine.model.Project;
 import com.google.refine.model.Row;
 import com.google.refine.util.ParsingUtilities;
-import com.google.refine.rdf.RdfSchema;
-import com.google.refine.rdf.app.ApplicationContext;
-import com.google.refine.rdf.exporters.RdfExporter;
-import com.google.refine.rdf.expr.RdfBinder;
-import com.google.refine.rdf.expr.functions.strings.Urlify;
+import org.deri.grefine.rdf.RdfSchema;
+import org.deri.grefine.rdf.app.ApplicationContext;
+import org.deri.grefine.rdf.exporters.RdfExporter;
+import org.deri.grefine.rdf.expr.RdfBinder;
+import org.deri.grefine.rdf.expr.functions.strings.Urlify;
 
 
 import static org.testng.Assert.*;

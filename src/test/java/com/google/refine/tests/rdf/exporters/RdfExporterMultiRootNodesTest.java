@@ -22,11 +22,11 @@ import com.google.refine.expr.ExpressionUtils;
 import com.google.refine.grel.ControlFunctionRegistry;
 import com.google.refine.model.Project;
 import com.google.refine.model.Row;
-import com.google.refine.rdf.RdfSchema;
-import com.google.refine.rdf.app.ApplicationContext;
-import com.google.refine.rdf.exporters.RdfExporter;
-import com.google.refine.rdf.expr.RdfBinder;
-import com.google.refine.rdf.expr.functions.strings.Urlify;
+import org.deri.grefine.rdf.RdfSchema;
+import org.deri.grefine.rdf.app.ApplicationContext;
+import org.deri.grefine.rdf.exporters.RdfExporter;
+import org.deri.grefine.rdf.expr.RdfBinder;
+import org.deri.grefine.rdf.expr.functions.strings.Urlify;
 import com.google.refine.util.ParsingUtilities;
 
 public class RdfExporterMultiRootNodesTest {

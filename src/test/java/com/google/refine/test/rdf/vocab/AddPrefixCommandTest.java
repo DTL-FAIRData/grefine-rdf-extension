@@ -12,14 +12,14 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.google.refine.rdf.RdfSchema;
-import com.google.refine.rdf.app.ApplicationContext;
-import com.google.refine.rdf.commands.AddPrefixCommand;
-import com.google.refine.rdf.vocab.PrefixExistException;
-import com.google.refine.rdf.vocab.VocabularyImportException;
-import com.google.refine.rdf.vocab.VocabularyImporter;
-import com.google.refine.rdf.vocab.VocabularyIndexException;
-import com.google.refine.rdf.vocab.imp.VocabularySearcher;
+import org.deri.grefine.rdf.RdfSchema;
+import org.deri.grefine.rdf.app.ApplicationContext;
+import org.deri.grefine.rdf.commands.AddPrefixCommand;
+import org.deri.grefine.rdf.vocab.PrefixExistException;
+import org.deri.grefine.rdf.vocab.VocabularyImportException;
+import org.deri.grefine.rdf.vocab.VocabularyImporter;
+import org.deri.grefine.rdf.vocab.VocabularyIndexException;
+import org.deri.grefine.rdf.vocab.imp.VocabularySearcher;
 
 import static org.testng.Assert.*;
 

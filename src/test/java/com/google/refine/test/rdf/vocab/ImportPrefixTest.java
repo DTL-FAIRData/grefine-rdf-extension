@@ -11,11 +11,11 @@ import org.openrdf.rio.RDFFormat;
 import org.openrdf.sail.memory.MemoryStore;
 import org.testng.annotations.Test;
 
-import com.google.refine.rdf.vocab.RDFSClass;
-import com.google.refine.rdf.vocab.RDFSProperty;
-import com.google.refine.rdf.vocab.VocabularyImportException;
-import com.google.refine.rdf.vocab.VocabularyImporter;
-import com.google.refine.rdf.vocab.imp.VocabularySearcher;
+import org.deri.grefine.rdf.vocab.RDFSClass;
+import org.deri.grefine.rdf.vocab.RDFSProperty;
+import org.deri.grefine.rdf.vocab.VocabularyImportException;
+import org.deri.grefine.rdf.vocab.VocabularyImporter;
+import org.deri.grefine.rdf.vocab.imp.VocabularySearcher;
 
 import static org.testng.Assert.*;
 

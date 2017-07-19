@@ -14,16 +14,16 @@ import org.json.JSONWriter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.google.refine.org.deri.reconcile.GRefineServiceManager;
-import com.google.refine.org.deri.reconcile.ServiceRegistry;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequest;
-import com.google.refine.org.deri.reconcile.model.ReconciliationService;
-import com.google.refine.org.deri.reconcile.rdf.RdfReconciliationService;
-import com.google.refine.org.deri.reconcile.rdf.endpoints.QueryEndpointImpl;
-import com.google.refine.org.deri.reconcile.rdf.executors.DumpQueryExecutor;
-import com.google.refine.org.deri.reconcile.rdf.executors.RemoteQueryExecutor;
-import com.google.refine.org.deri.reconcile.rdf.factories.LarqSparqlQueryFactory;
-import com.google.refine.org.deri.reconcile.util.GRefineJsonUtilitiesImpl;
+import org.deri.grefine.reconcile.GRefineServiceManager;
+import org.deri.grefine.reconcile.ServiceRegistry;
+import org.deri.grefine.reconcile.model.ReconciliationRequest;
+import org.deri.grefine.reconcile.model.ReconciliationService;
+import org.deri.grefine.reconcile.rdf.RdfReconciliationService;
+import org.deri.grefine.reconcile.rdf.endpoints.QueryEndpointImpl;
+import org.deri.grefine.reconcile.rdf.executors.DumpQueryExecutor;
+import org.deri.grefine.reconcile.rdf.executors.RemoteQueryExecutor;
+// import org.deri.grefine.reconcile.rdf.factories.LarqSparqlQueryFactory;
+import org.deri.grefine.reconcile.util.GRefineJsonUtilitiesImpl;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 

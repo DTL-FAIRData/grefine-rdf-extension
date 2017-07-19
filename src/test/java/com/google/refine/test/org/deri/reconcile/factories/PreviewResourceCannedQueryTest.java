@@ -8,7 +8,7 @@ import java.util.Collections;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.Multimap;
-import com.google.refine.org.deri.reconcile.rdf.factories.PreviewResourceCannedQuery;
+import org.deri.grefine.reconcile.rdf.factories.PreviewResourceCannedQuery;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;

@@ -6,13 +6,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableList;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequest;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequestContext;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequestContext.IdentifiedValueContext;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequestContext.PropertyContext;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequestContext.TextualValueContext;
-import com.google.refine.org.deri.reconcile.rdf.factories.LarqSparqlQueryFactory;
-import com.google.refine.org.deri.reconcile.rdf.factories.SparqlQueryFactory;
+import org.deri.grefine.reconcile.model.ReconciliationRequest;
+import org.deri.grefine.reconcile.model.ReconciliationRequestContext;
+import org.deri.grefine.reconcile.model.ReconciliationRequestContext.IdentifiedValueContext;
+import org.deri.grefine.reconcile.model.ReconciliationRequestContext.PropertyContext;
+import org.deri.grefine.reconcile.model.ReconciliationRequestContext.TextualValueContext;
+import org.deri.grefine.reconcile.rdf.factories.LarqSparqlQueryFactory;
+import org.deri.grefine.reconcile.rdf.factories.SparqlQueryFactory;
 
 
 public class LarqSparqlQueryFactoryTest {

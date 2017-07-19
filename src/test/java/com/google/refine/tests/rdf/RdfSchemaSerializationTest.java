@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.google.refine.util.ParsingUtilities;
-import com.google.refine.rdf.RdfSchema;
+import org.deri.grefine.rdf.RdfSchema;
 
 import static org.testng.Assert.*;
 

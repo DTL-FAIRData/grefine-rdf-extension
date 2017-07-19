@@ -16,14 +16,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableList;
-import com.google.refine.org.deri.reconcile.model.ReconciliationCandidate;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequest;
-import com.google.refine.org.deri.reconcile.model.SearchResultItem;
-import com.google.refine.org.deri.reconcile.rdf.endpoints.QueryEndpoint;
-import com.google.refine.org.deri.reconcile.rdf.endpoints.QueryEndpointImpl;
-import com.google.refine.org.deri.reconcile.rdf.executors.DumpQueryExecutor;
-import com.google.refine.org.deri.reconcile.rdf.executors.QueryExecutor;
-import com.google.refine.org.deri.reconcile.rdf.factories.LarqSparqlQueryFactory;
+import org.deri.grefine.reconcile.model.ReconciliationCandidate;
+import org.deri.grefine.reconcile.model.ReconciliationRequest;
+import org.deri.grefine.reconcile.model.SearchResultItem;
+import org.deri.grefine.reconcile.rdf.endpoints.QueryEndpoint;
+import org.deri.grefine.reconcile.rdf.endpoints.QueryEndpointImpl;
+import org.deri.grefine.reconcile.rdf.executors.DumpQueryExecutor;
+import org.deri.grefine.reconcile.rdf.executors.QueryExecutor;
+import org.deri.grefine.reconcile.rdf.factories.LarqSparqlQueryFactory;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 

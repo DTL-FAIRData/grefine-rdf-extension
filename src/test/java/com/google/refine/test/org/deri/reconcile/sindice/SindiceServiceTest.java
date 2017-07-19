@@ -8,15 +8,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableList;
-import com.google.refine.org.deri.reconcile.model.ReconciliationCandidate;
-import com.google.refine.org.deri.reconcile.model.ReconciliationRequest;
-import com.google.refine.org.deri.reconcile.rdf.endpoints.QueryEndpoint;
-import com.google.refine.org.deri.reconcile.rdf.endpoints.QueryEndpointFactory;
-import com.google.refine.org.deri.reconcile.sindice.SindiceBroker;
-import com.google.refine.org.deri.reconcile.sindice.SindiceService;
-import com.google.refine.org.deri.reconcile.util.GRefineJsonUtilities;
-import com.google.refine.org.deri.reconcile.util.GRefineJsonUtilitiesImpl;
-import com.google.refine.org.deri.reconcile.util.RdfUtilitiesImpl;
+import org.deri.grefine.reconcile.model.ReconciliationCandidate;
+import org.deri.grefine.reconcile.model.ReconciliationRequest;
+import org.deri.grefine.reconcile.rdf.endpoints.QueryEndpoint;
+import org.deri.grefine.reconcile.rdf.endpoints.QueryEndpointFactory;
+import org.deri.grefine.reconcile.sindice.SindiceBroker;
+import org.deri.grefine.reconcile.sindice.SindiceService;
+import org.deri.grefine.reconcile.util.GRefineJsonUtilities;
+import org.deri.grefine.reconcile.util.GRefineJsonUtilitiesImpl;
+import org.deri.grefine.reconcile.util.RdfUtilitiesImpl;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
