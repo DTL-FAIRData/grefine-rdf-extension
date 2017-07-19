@@ -36,86 +36,87 @@ import com.google.refine.model.Row;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RdfExporter implements WriterExporter{
+public class RdfExporter implements WriterExporter {
 
     private RDFFormat format;
     private ApplicationContext applicationContext;
     final static Logger logger = LoggerFactory.getLogger("RdfExporter");
 
-	public RdfExporter(ApplicationContext ctxt, RDFFormat f){
+    public RdfExporter(ApplicationContext ctxt, RDFFormat f) {
         this.format = f;
         this.applicationContext = ctxt;
     }
-	
-	public ApplicationContext getApplicationContext() {
-		return applicationContext;
-	}
-    
-    public void export(Project project, Properties options, Engine engine,
-            OutputStream outputStream) throws IOException {
-	    export(project, options, engine, Rio.createWriter(format, outputStream));
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
     }
 
-	public void export(Project project, Properties options, Engine engine,
-					   Writer writer) throws IOException {
-		export(project, options, engine, Rio.createWriter(format, writer));
-	}
+    public void export(Project project, Properties options, Engine engine,
+            OutputStream outputStream) throws IOException {
+        export(project, options, engine, Rio.createWriter(format, outputStream));
+    }
 
-	private void export(Project project, Properties options, Engine engine,
-						RDFWriter writer) throws IOException {
-    	RdfSchema schema;
-    	try{
-    		schema = Util.getProjectSchema(applicationContext,project);
-    	}catch(VocabularyIndexException ve){
-    		throw new IOException("Unable to create index for RDF schema",ve);
-    	}
-        try{
-		for(Vocabulary v:schema.getPrefixesMap().values()){
-		        writer.handleNamespace(v.getName(), v.getUri());
-		}
+    public void export(Project project, Properties options, Engine engine, Writer writer)
+            throws IOException {
+        export(project, options, engine, Rio.createWriter(format, writer));
+    }
 
-		exportModel(project, engine, schema, writer);
-        }catch(RDFHandlerException ex){
-        	throw new RuntimeException(ex);
+    private void export(Project project, Properties options, Engine engine, RDFWriter writer)
+            throws IOException {
+        RdfSchema schema;
+        try {
+            schema = Util.getProjectSchema(applicationContext, project);
+        } catch (VocabularyIndexException ve) {
+            throw new IOException("Unable to create index for RDF schema", ve);
+        }
+        try {
+            for (Vocabulary v : schema.getPrefixesMap().values()) {
+                writer.handleNamespace(v.getName(), v.getUri());
+            }
+
+            exportModel(project, engine, schema, writer);
+        } catch (RDFHandlerException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
-    public Repository exportModel(final Project project, Engine engine, RdfSchema schema, RDFWriter writer) throws IOException{
-    	RdfRowVisitor visitor = new RdfRowVisitor(schema, writer) {
-			
-			@Override
-			public boolean visit(Project project, int rowIndex, Row row) {
-				for(Node root:roots){
-					root.createNode(baseUri, factory, con, project, row, rowIndex,blanks);
+    public Repository exportModel(final Project project, Engine engine, RdfSchema schema,
+            RDFWriter writer) throws IOException {
+        RdfRowVisitor visitor = new RdfRowVisitor(schema, writer) {
 
-					try {
-					    // flush here to preserve root ordering in the output file
-					    flushStatements();
-					} catch (RepositoryException e) {
-					    throw new RuntimeException(e);
-					} catch (RDFHandlerException e) {
-						throw new RuntimeException(e);
-					}
-				}
+            @Override
+            public boolean visit(Project project, int rowIndex, Row row) {
+                for (Node root : roots) {
+                    root.createNode(baseUri, factory, con, project, row, rowIndex, blanks);
 
-				return false;
-			}
-		};
-		return buildModel(project, engine, visitor);
+                    try {
+                        // flush here to preserve root ordering in the output file
+                        flushStatements();
+                    } catch (RepositoryException e) {
+                        throw new RuntimeException(e);
+                    } catch (RDFHandlerException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+                return false;
+            }
+        };
+        return buildModel(project, engine, visitor);
     }
-    
+
     public static Repository buildModel(Project project, Engine engine, RdfRowVisitor visitor) {
-//    	RdfSchema schema = Util.getProjectSchema(project);
+        // RdfSchema schema = Util.getProjectSchema(project);
         FilteredRows filteredRows = engine.getAllFilteredRows();
         filteredRows.accept(project, visitor);
         return visitor.getModel();
-        
+
     }
-    
+
     public String getContentType() {
-        if(format.equals(RDFFormat.TURTLE)){
+        if (format.equals(RDFFormat.TURTLE)) {
             return "text/turtle";
-        }else{
+        } else {
             return "application/rdf+xml";
         }
     }
@@ -123,108 +124,111 @@ public class RdfExporter implements WriterExporter{
     public boolean takeWriter() {
         return true;
     }
-    
-    public static abstract class RdfRowVisitor implements RowVisitor{
+
+    public static abstract class RdfRowVisitor implements RowVisitor {
         protected Repository model;
         protected URI baseUri;
         protected BNode[] blanks;
         protected List<Node> roots;
         private RdfSchema schema;
-        
+
         protected ValueFactory factory;
         protected RepositoryConnection con;
-	    protected RDFWriter writer;
-        
-        public Repository getModel() {
-			return model;
-		}
+        protected RDFWriter writer;
 
-        public RdfRowVisitor(RdfSchema schema, RDFWriter writer){
-        	this.schema = schema;
-	        this.writer = writer;
-        	baseUri = schema.getBaseUri();
+        public Repository getModel() {
+            return model;
+        }
+
+        public RdfRowVisitor(RdfSchema schema, RDFWriter writer) {
+            this.schema = schema;
+            this.writer = writer;
+            baseUri = schema.getBaseUri();
             roots = schema.getRoots();
 
-            //initilaizing repository
+            // initilaizing repository
             model = new SailRepository(new MemoryStore());
-            try{
-            	model.initialize();
-            	RepositoryConnection con = model.getConnection();
-            	try{
-            		ValueFactory factory = con.getValueFactory();
-            		blanks = new BNode[schema.get_blanks().size()];
-            		for (int i = 0; i < blanks.length; i++) {
-            			blanks[i] = factory.createBNode();
-            		}
-            	}finally{
-            		con.close();
-            	}
-            }catch(RepositoryException ex){
-            	throw new RuntimeException(ex);
+            try {
+                model.initialize();
+                RepositoryConnection con = model.getConnection();
+                try {
+                    ValueFactory factory = con.getValueFactory();
+                    blanks = new BNode[schema.get_blanks().size()];
+                    for (int i = 0; i < blanks.length; i++) {
+                        blanks[i] = factory.createBNode();
+                    }
+                } finally {
+                    con.close();
+                }
+            } catch (RepositoryException ex) {
+                throw new RuntimeException(ex);
             }
         }
+
         public void end(Project project) {
-        	try {
-		        writer.endRDF();
-				if(con.isOpen()){
-					con.close();
-				}
-			} catch (RepositoryException e) {
-				throw new RuntimeException("",e);
-			} catch (RDFHandlerException e) {
-		        throw new RuntimeException("",e);
-	        }
+            try {
+                writer.endRDF();
+                if (con.isOpen()) {
+                    con.close();
+                }
+            } catch (RepositoryException e) {
+                throw new RuntimeException("", e);
+            } catch (RDFHandlerException e) {
+                throw new RuntimeException("", e);
+            }
         }
 
         public void start(Project project) {
-        	try{
-        		con = model.getConnection();
-        		factory = con.getValueFactory();
+            try {
+                con = model.getConnection();
+                factory = con.getValueFactory();
 
-		        // Open RDF output
-		        writer.startRDF();
+                // Open RDF output
+                writer.startRDF();
 
-		        // Export namespace information
-		        CloseableIteration<? extends Namespace, RepositoryException> nsIter = con.getNamespaces();
-		        try {
-			    	while (nsIter.hasNext()) {
-						Namespace ns = nsIter.next();
-						writer.handleNamespace(ns.getPrefix(), ns.getName());
-					}
-			    } finally {
-		            nsIter.close();
-		        }
+                // Export namespace information
+                CloseableIteration<? extends Namespace, RepositoryException> nsIter =
+                        con.getNamespaces();
+                try {
+                    while (nsIter.hasNext()) {
+                        Namespace ns = nsIter.next();
+                        writer.handleNamespace(ns.getPrefix(), ns.getName());
+                    }
+                } finally {
+                    nsIter.close();
+                }
 
-        	}catch(RepositoryException ex){
-        		throw new RuntimeException("",ex);
-        	} catch (RDFHandlerException e) {
-		        e.printStackTrace();
-	        }
+            } catch (RepositoryException ex) {
+                throw new RuntimeException("", ex);
+            } catch (RDFHandlerException e) {
+                e.printStackTrace();
+            }
         }
 
-	    protected void flushStatements() throws RepositoryException, RDFHandlerException{
-		    List<Resource> resourceList = con.getContextIDs().asList();
-		    Resource[] resources = resourceList.toArray(new Resource[resourceList.size()]);
+        protected void flushStatements() throws RepositoryException, RDFHandlerException {
+            List<Resource> resourceList = con.getContextIDs().asList();
+            Resource[] resources = resourceList.toArray(new Resource[resourceList.size()]);
 
-		    // Export statements
-		    CloseableIteration<? extends Statement, RepositoryException> stIter =
-				    con.getStatements(null, null, null, false, resources);
+            // Export statements
+            CloseableIteration<? extends Statement, RepositoryException> stIter =
+                    con.getStatements(null, null, null, false, resources);
 
-		    try {
-			    while (stIter.hasNext()) {
-				    this.writer.handleStatement(stIter.next());
-			    }
-		    } finally {
-			    stIter.close();
-		    }
+            try {
+                while (stIter.hasNext()) {
+                    this.writer.handleStatement(stIter.next());
+                }
+            } finally {
+                stIter.close();
+            }
 
-		    // empty the repository
-		    con.clear();
-	    }
+            // empty the repository
+            con.clear();
+        }
 
         abstract public boolean visit(Project project, int rowIndex, Row row);
-        public RdfSchema getRdfSchema(){
-        	return schema;
+
+        public RdfSchema getRdfSchema() {
+            return schema;
         }
     }
 

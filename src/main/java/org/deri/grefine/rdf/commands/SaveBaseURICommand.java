@@ -15,29 +15,29 @@ import com.google.refine.model.Project;
 public class SaveBaseURICommand extends RdfCommand {
 
     public SaveBaseURICommand(ApplicationContext ctxt) {
-		super(ctxt);
-	}
+        super(ctxt);
+    }
 
-	@Override
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             Project project = getProject(request);
             String base = request.getParameter("baseURI");
             URI baseUri;
-            try{
-            	baseUri = Util.buildURI(base);
-            }catch(RuntimeException re){
-            	respondException(response, re);
-            	return;
+            try {
+                baseUri = Util.buildURI(base);
+            } catch (RuntimeException re) {
+                respondException(response, re);
+                return;
             }
-            Util.getProjectSchema(getRdfContext(),project).setBaseUri(baseUri);
-            
+            Util.getProjectSchema(getRdfContext(), project).setBaseUri(baseUri);
+
             project.getMetadata().updateModified();
-            
-            respond(response,"OK","Base URI saved");
-            
-        }catch(Exception e){
+
+            respond(response, "OK", "Base URI saved");
+
+        } catch (Exception e) {
             respondException(response, e);
         }
     }

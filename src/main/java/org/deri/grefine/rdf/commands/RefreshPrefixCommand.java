@@ -15,46 +15,47 @@ import org.json.JSONWriter;
 
 import com.google.refine.Jsonizable;
 
-public class RefreshPrefixCommand extends RdfCommand{
+public class RefreshPrefixCommand extends RdfCommand {
 
-	public RefreshPrefixCommand(ApplicationContext ctxt) {
-		super(ctxt);
-	}
+    public RefreshPrefixCommand(ApplicationContext ctxt) {
+        super(ctxt);
+    }
 
-	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String name = request.getParameter("name");
-		String uri = request.getParameter("uri");
-		String projectId = request.getParameter("project");
-		getRdfSchema(request).removePrefix(name);
-		
-		getRdfContext().getVocabularySearcher().deleteTermsOfVocab(name, projectId);
-		try{
-			getRdfContext().getVocabularySearcher().importAndIndexVocabulary(name, uri, uri, projectId,new VocabularyImporter());
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String uri = request.getParameter("uri");
+        String projectId = request.getParameter("project");
+        getRdfSchema(request).removePrefix(name);
+
+        getRdfContext().getVocabularySearcher().deleteTermsOfVocab(name, projectId);
+        try {
+            getRdfContext().getVocabularySearcher().importAndIndexVocabulary(name, uri, uri,
+                    projectId, new VocabularyImporter());
         } catch (PrefixExistException e) {
             respondException(response, e);
             return;
-        } catch (Exception e){
-        	response.setCharacterEncoding("UTF-8");
+        } catch (Exception e) {
+            response.setCharacterEncoding("UTF-8");
             response.setHeader("Content-Type", "application/json");
-        	respond(response,"{\"code\":\"ok\"}");
-        	return;
+            respond(response, "{\"code\":\"ok\"}");
+            return;
         }
-			
-		try{
-			respondJSON(response, new Jsonizable() {
-            
-				@Override
-				public void write(JSONWriter writer, Properties options)
-                    	throws JSONException {
-					writer.object();
-					writer.key("code"); writer.value("ok");
-					writer.endObject();
-				}
-			});
-		} catch (JSONException e) {
-			respondException(response, e);
-		} 
-	}
+
+        try {
+            respondJSON(response, new Jsonizable() {
+
+                @Override
+                public void write(JSONWriter writer, Properties options) throws JSONException {
+                    writer.object();
+                    writer.key("code");
+                    writer.value("ok");
+                    writer.endObject();
+                }
+            });
+        } catch (JSONException e) {
+            respondException(response, e);
+        }
+    }
 }

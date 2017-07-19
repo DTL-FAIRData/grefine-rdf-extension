@@ -9,14 +9,15 @@ import com.google.refine.model.Row;
 
 public class RdfExpressionUtil {
 
-	public static Object evaluate(Evaluable eval,Properties bindings,Row row,int rowIndex,String columnName,int cellIndex){
-		Cell cell; 
-		if(cellIndex<0){
-         	cell= new Cell(rowIndex,null);
-         }else{
-         	cell= row.getCell(cellIndex);
-         }
+    public static Object evaluate(Evaluable eval, Properties bindings, Row row, int rowIndex,
+            String columnName, int cellIndex) {
+        Cell cell;
+        if (cellIndex < 0) {
+            cell = new Cell(rowIndex, null);
+        } else {
+            cell = row.getCell(cellIndex);
+        }
         ExpressionUtils.bind(bindings, row, rowIndex, columnName, cell);
-		return eval.evaluate(bindings);
-	}
+        return eval.evaluate(bindings);
+    }
 }

@@ -2,59 +2,62 @@ package org.deri.grefine.reconcile.model;
 
 public class ReconciliationCandidate {
 
-	private final String id;
-	private final String name;
-	private String[] types;
-	private final double score;
-	private boolean match;
-	
-	public ReconciliationCandidate(String id, String name, String[] types, double score, boolean match){
-		this.id = id;
-		this.name = name;
-		this.types = types;
-		this.score = score;
-		this.match = match;
-	}
+    private final String id;
+    private final String name;
+    private String[] types;
+    private final double score;
+    private boolean match;
 
-	public String getId() {
-		return id;
-	}
+    public ReconciliationCandidate(String id, String name, String[] types, double score,
+            boolean match) {
+        this.id = id;
+        this.name = name;
+        this.types = types;
+        this.score = score;
+        this.match = match;
+    }
 
-	public boolean isMatch() {
-		return match;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setMatch(boolean match) {
-		this.match = match;
-	}
+    public boolean isMatch() {
+        return match;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setMatch(boolean match) {
+        this.match = match;
+    }
 
-	public String[] getTypes() {
-		return types;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public double getScore() {
-		return score;
-	}
+    public String[] getTypes() {
+        return types;
+    }
 
-	@Override
-	public int hashCode() {
-		return id.hashCode();
-	}
+    public double getScore() {
+        return score;
+    }
 
-	public void setTypes(String[] types) {
-		this.types = types;
-	}
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if(obj==null) return false;
-		if(!obj.getClass().equals(this.getClass())) return false;
-		return this.getId().equals(((ReconciliationCandidate)obj).getId());
-	}
-	
-	
+    public void setTypes(String[] types) {
+        this.types = types;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (!obj.getClass().equals(this.getClass()))
+            return false;
+        return this.getId().equals(((ReconciliationCandidate) obj).getId());
+    }
+
+
 }

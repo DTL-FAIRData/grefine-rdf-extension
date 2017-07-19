@@ -19,48 +19,52 @@ import org.json.JSONWriter;
 import com.google.common.collect.ImmutableList;
 import com.google.refine.commands.Command;
 
-public abstract class AbstractAddServiceCommand extends Command{
+public abstract class AbstractAddServiceCommand extends Command {
 
-	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try{
-			ReconciliationService service = getReconciliationService(request);
-			response.setCharacterEncoding("UTF-8");
-	        response.setHeader("Content-Type", "application/json");
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            ReconciliationService service = getReconciliationService(request);
+            response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-Type", "application/json");
 
-	        Writer w = response.getWriter();
-	        JSONWriter writer = new JSONWriter(w);
-	        
-	        writer.object();
-	        writer.key("code"); writer.value("ok");
-	        writer.key("service");
-	        service.writeAsJson(writer);
-	        writer.endObject();
-	        w.flush();
-	        w.close();
-		} catch (Exception e) {
-			respondException(response, e);
-		}
-	}
+            Writer w = response.getWriter();
+            JSONWriter writer = new JSONWriter(w);
 
-	protected String getIdForString(String name){
-		return name.toLowerCase().replaceAll("\\s+", "-").replaceAll("[^-.a-zA-Z0-9]", "").replaceAll("\\-\\-+", "-");
-	}
-	
-	protected ImmutableList<String> asImmutableList(String text){
-		List<String> lst = new ArrayList<String>();
-		if (StringUtils.isNotBlank(text)) {
-			StringTokenizer tokenizer = new StringTokenizer(text," \n");
-			while(tokenizer.hasMoreTokens()){
-				String token = tokenizer.nextToken();
-				if(token.trim().isEmpty()){
-					continue;
-				}
-				lst.add(token.trim());
-			}
-		}
-		return ImmutableList.copyOf(lst);
-	}
-	
-	protected abstract ReconciliationService getReconciliationService(HttpServletRequest request)throws JSONException, IOException;	
+            writer.object();
+            writer.key("code");
+            writer.value("ok");
+            writer.key("service");
+            service.writeAsJson(writer);
+            writer.endObject();
+            w.flush();
+            w.close();
+        } catch (Exception e) {
+            respondException(response, e);
+        }
+    }
+
+    protected String getIdForString(String name) {
+        return name.toLowerCase().replaceAll("\\s+", "-").replaceAll("[^-.a-zA-Z0-9]", "")
+                .replaceAll("\\-\\-+", "-");
+    }
+
+    protected ImmutableList<String> asImmutableList(String text) {
+        List<String> lst = new ArrayList<String>();
+        if (StringUtils.isNotBlank(text)) {
+            StringTokenizer tokenizer = new StringTokenizer(text, " \n");
+            while (tokenizer.hasMoreTokens()) {
+                String token = tokenizer.nextToken();
+                if (token.trim().isEmpty()) {
+                    continue;
+                }
+                lst.add(token.trim());
+            }
+        }
+        return ImmutableList.copyOf(lst);
+    }
+
+    protected abstract ReconciliationService getReconciliationService(HttpServletRequest request)
+            throws JSONException, IOException;
 }

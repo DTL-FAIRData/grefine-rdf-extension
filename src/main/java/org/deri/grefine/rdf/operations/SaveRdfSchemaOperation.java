@@ -26,14 +26,11 @@ public class SaveRdfSchemaOperation extends AbstractOperation {
         this._schema = schema;
     }
 
-    static public AbstractOperation reconstruct(Project project, JSONObject obj)
-            throws Exception {
-        return new SaveRdfSchemaOperation(RdfSchema.reconstruct(obj
-                .getJSONObject("schema")));
+    static public AbstractOperation reconstruct(Project project, JSONObject obj) throws Exception {
+        return new SaveRdfSchemaOperation(RdfSchema.reconstruct(obj.getJSONObject("schema")));
     }
 
-    public void write(JSONWriter writer, Properties options)
-            throws JSONException {
+    public void write(JSONWriter writer, Properties options) throws JSONException {
         writer.object();
         writer.key("op");
         writer.value(OperationRegistry.s_opClassToName.get(this.getClass()));
@@ -51,31 +48,31 @@ public class SaveRdfSchemaOperation extends AbstractOperation {
     }
 
     @Override
-    protected HistoryEntry createHistoryEntry(Project project,
-            long historyEntryID) throws Exception {
+    protected HistoryEntry createHistoryEntry(Project project, long historyEntryID)
+            throws Exception {
         String description = "Save RDF schema skeleton";
-        
+
         Change change = new RdfSchemaChange(_schema);
-        
-        return new HistoryEntry(historyEntryID, project, description,
-                SaveRdfSchemaOperation.this, change);
+
+        return new HistoryEntry(historyEntryID, project, description, SaveRdfSchemaOperation.this,
+                change);
     }
 
     static public class RdfSchemaChange implements Change {
         final protected RdfSchema _newSchema;
         protected RdfSchema _oldSchema;
-        
+
         public RdfSchemaChange(RdfSchema schema) {
             _newSchema = schema;
         }
-        
+
         public void apply(Project project) {
             synchronized (project) {
                 _oldSchema = (RdfSchema) project.overlayModels.get("rdfSchema");
                 project.overlayModels.put("rdfSchema", _newSchema);
             }
         }
-        
+
         public void revert(Project project) {
             synchronized (project) {
                 if (_oldSchema == null) {
@@ -85,7 +82,7 @@ public class SaveRdfSchemaOperation extends AbstractOperation {
                 }
             }
         }
-        
+
         public void save(Writer writer, Properties options) throws IOException {
             writer.write("newSchema=");
             writeRdfSchema(_newSchema, writer);
@@ -95,35 +92,33 @@ public class SaveRdfSchemaOperation extends AbstractOperation {
             writer.write('\n');
             writer.write("/ec/\n"); // end of change marker
         }
-        
-        static public Change load(LineNumberReader reader, Pool pool)
-                throws Exception {
+
+        static public Change load(LineNumberReader reader, Pool pool) throws Exception {
             RdfSchema oldSchema = null;
             RdfSchema newSchema = null;
-            
+
             String line;
             while ((line = reader.readLine()) != null && !"/ec/".equals(line)) {
                 int equal = line.indexOf('=');
                 CharSequence field = line.subSequence(0, equal);
                 String value = line.substring(equal + 1);
-                
+
                 if ("oldSchema".equals(field) && value.length() > 0) {
-                    oldSchema = RdfSchema.reconstruct(ParsingUtilities
-                            .evaluateJsonStringToObject(value));
+                    oldSchema = RdfSchema
+                            .reconstruct(ParsingUtilities.evaluateJsonStringToObject(value));
                 } else if ("newSchema".equals(field) && value.length() > 0) {
-                    newSchema = RdfSchema.reconstruct(ParsingUtilities
-                            .evaluateJsonStringToObject(value));
+                    newSchema = RdfSchema
+                            .reconstruct(ParsingUtilities.evaluateJsonStringToObject(value));
                 }
             }
-            
+
             RdfSchemaChange change = new RdfSchemaChange(newSchema);
             change._oldSchema = oldSchema;
-            
+
             return change;
         }
-        
-        static protected void writeRdfSchema(RdfSchema s, Writer writer)
-                throws IOException {
+
+        static protected void writeRdfSchema(RdfSchema s, Writer writer) throws IOException {
             if (s != null) {
                 JSONWriter jsonWriter = new JSONWriter(writer);
                 try {

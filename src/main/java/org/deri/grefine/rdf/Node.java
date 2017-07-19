@@ -11,6 +11,7 @@ import com.google.refine.Jsonizable;
 import com.google.refine.model.Project;
 import com.google.refine.model.Row;
 
-public interface Node extends Jsonizable{
-    Value[] createNode(URI baseUri,ValueFactory factory,RepositoryConnection con,Project project,Row row,int rowIndex,BNode[] blanks);
+public interface Node extends Jsonizable {
+    Value[] createNode(URI baseUri, ValueFactory factory, RepositoryConnection con, Project project,
+            Row row, int rowIndex, BNode[] blanks);
 }

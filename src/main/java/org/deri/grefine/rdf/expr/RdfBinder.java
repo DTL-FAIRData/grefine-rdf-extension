@@ -16,14 +16,15 @@ import com.google.refine.model.Row;
 
 public class RdfBinder implements Binder {
 
-	final static Logger logger = LoggerFactory.getLogger("RdfBinder");
-	
-	private ApplicationContext rdfContext;
-	
-	public RdfBinder(ApplicationContext ctxt){
-		super();
-		this.rdfContext = ctxt;
-	}
+    final static Logger logger = LoggerFactory.getLogger("RdfBinder");
+
+    private ApplicationContext rdfContext;
+
+    public RdfBinder(ApplicationContext ctxt) {
+        super();
+        this.rdfContext = ctxt;
+    }
+
     @Override
     public void bind(Properties bindings, Row row, int rowIndex, String columnName, Cell cell) {
         // nothing to do
@@ -32,12 +33,12 @@ public class RdfBinder implements Binder {
     @Override
     public void initializeBindings(Properties bindings, Project project) {
         try {
-			bindings.put("baseURI", Util.getProjectSchema(rdfContext,project).getBaseUri());
-		} catch (VocabularyIndexException e) {
-			logger.error("Unable to bind baseURI. Unable to create an index for RDF Schema", e);
-		} catch (IOException e) {
-			logger.error("Unable to bind baseURI. Unable to create an index for RDF Schema", e);
-		}
+            bindings.put("baseURI", Util.getProjectSchema(rdfContext, project).getBaseUri());
+        } catch (VocabularyIndexException e) {
+            logger.error("Unable to bind baseURI. Unable to create an index for RDF Schema", e);
+        } catch (IOException e) {
+            logger.error("Unable to bind baseURI. Unable to create an index for RDF Schema", e);
+        }
     }
 
 }

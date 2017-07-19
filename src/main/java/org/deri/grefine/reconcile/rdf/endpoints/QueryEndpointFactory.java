@@ -9,9 +9,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 
 public class QueryEndpointFactory {
 
-	public QueryEndpoint getLarqQueryEndpoint(Model model){
-		SparqlQueryFactory queryFactory = new JenaTextSparqlQueryFactory();
-		QueryExecutor queryExecutor = new DumpQueryExecutor(model);
-		return new QueryEndpointImpl(queryFactory, queryExecutor);
-	}
+    public QueryEndpoint getLarqQueryEndpoint(Model model) {
+        SparqlQueryFactory queryFactory = new JenaTextSparqlQueryFactory();
+        QueryExecutor queryExecutor = new DumpQueryExecutor(model);
+        return new QueryEndpointImpl(queryFactory, queryExecutor);
+    }
 }

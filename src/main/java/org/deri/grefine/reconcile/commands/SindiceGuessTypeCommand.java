@@ -16,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import org.deri.grefine.reconcile.sindice.SindiceBroker;
 import org.deri.grefine.reconcile.util.GRefineJsonUtilitiesImpl;
 import org.json.JSONWriter;
@@ -29,57 +28,58 @@ import com.google.refine.model.Row;
 
 public class SindiceGuessTypeCommand extends Command {
 
-	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try{
-			Project project = getProject(request);
-			String columnName = request.getParameter("columnName");
-			response.setCharacterEncoding("UTF-8");
-			response.setHeader("Content-Type", "application/json");
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            Project project = getProject(request);
+            String columnName = request.getParameter("columnName");
+            response.setCharacterEncoding("UTF-8");
+            response.setHeader("Content-Type", "application/json");
 
-			JSONWriter writer = new JSONWriter(response.getWriter());
-			writer.object();
+            JSONWriter writer = new JSONWriter(response.getWriter());
+            writer.object();
 
-			Column column = project.columnModel.getColumnByName(columnName);
-			if (column == null) {
-				writer.key("code");
-				writer.value("error");
-				writer.key("message");
-				writer.value("No such column");
-			} else {
-				try {
-					writer.key("code");
-					writer.value("ok");
-					List<String> domains = guessDomain(project, column);
-					writer.key("domains");
-					writer.array();
-					for(String domain:domains){
-						writer.value(domain);
-					}
-					writer.endArray();
-				} catch (Exception e) {
-					writer.key("code");
-					writer.value("error");
-				}
-			}
+            Column column = project.columnModel.getColumnByName(columnName);
+            if (column == null) {
+                writer.key("code");
+                writer.value("error");
+                writer.key("message");
+                writer.value("No such column");
+            } else {
+                try {
+                    writer.key("code");
+                    writer.value("ok");
+                    List<String> domains = guessDomain(project, column);
+                    writer.key("domains");
+                    writer.array();
+                    for (String domain : domains) {
+                        writer.value(domain);
+                    }
+                    writer.endArray();
+                } catch (Exception e) {
+                    writer.key("code");
+                    writer.value("error");
+                }
+            }
 
-			writer.endObject();
-		} catch (Exception e) {
-			respondException(response, e);
-		}
-	}
-	
-	final static int s_sampleSize = 10;
-	final static int s_resultsLimit = 3;
-	
-	private List<String> guessDomain(Project project, Column column){
-		Map<String,Integer> domainsMap = new HashMap<String, Integer>();
+            writer.endObject();
+        } catch (Exception e) {
+            respondException(response, e);
+        }
+    }
+
+    final static int s_sampleSize = 10;
+    final static int s_resultsLimit = 3;
+
+    private List<String> guessDomain(Project project, Column column) {
+        Map<String, Integer> domainsMap = new HashMap<String, Integer>();
 
         int cellIndex = column.getCellIndex();
-        
+
         List<String> samples = new ArrayList<String>(s_sampleSize);
         Set<String> sampleSet = new HashSet<String>();
-        
+
         for (Row row : project.rows) {
             Object value = row.getCellValue(cellIndex);
             if (ExpressionUtils.isNonBlankData(value)) {
@@ -93,31 +93,33 @@ public class SindiceGuessTypeCommand extends Command {
                 }
             }
         }
-        
+
         SindiceBroker service = new SindiceBroker();
-        for(int j=0;j<samples.size();j++){
-        	String s = samples.get(j);
-        	List<String> domains = service.guessDomain(s,s_resultsLimit,new GRefineJsonUtilitiesImpl());
-        	for(String domain:domains){
-        		if(domainsMap.containsKey(domain)){
-        			domainsMap.put(domain,domainsMap.get(domain).intValue() + 1);
-        		}else{
-        			domainsMap.put(domain, 0);
-        		}
-        	}
+        for (int j = 0; j < samples.size(); j++) {
+            String s = samples.get(j);
+            List<String> domains =
+                    service.guessDomain(s, s_resultsLimit, new GRefineJsonUtilitiesImpl());
+            for (String domain : domains) {
+                if (domainsMap.containsKey(domain)) {
+                    domainsMap.put(domain, domainsMap.get(domain).intValue() + 1);
+                } else {
+                    domainsMap.put(domain, 0);
+                }
+            }
         }
-        
-        List<Entry<String, Integer>> domainsEntries = new LinkedList<Entry<String, Integer>>(domainsMap.entrySet());
+
+        List<Entry<String, Integer>> domainsEntries =
+                new LinkedList<Entry<String, Integer>>(domainsMap.entrySet());
         Collections.sort(domainsEntries, new Comparator<Entry<String, Integer>>() {
-             public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
-            	 return o2.getValue().compareTo(o1.getValue());
-             }
+            public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
         });
-        
+
         List<String> domains = new ArrayList<String>();
-        for(Entry<String, Integer> entry: domainsEntries){
-        	domains.add(entry.getKey());
+        for (Entry<String, Integer> entry : domainsEntries) {
+            domains.add(entry.getKey());
         }
         return domains;
-	}
+    }
 }

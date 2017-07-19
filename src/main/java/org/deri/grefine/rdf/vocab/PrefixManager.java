@@ -9,22 +9,22 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 public class PrefixManager {
-	private Map<String, String> prefixMap = new HashMap<String, String>();
+    private Map<String, String> prefixMap = new HashMap<String, String>();
 
-	public PrefixManager(InputStream in) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		String strLine;
-		StringTokenizer tokenizer;
-		// Read File Line By Line
-		while ((strLine = br.readLine()) != null) {
-			tokenizer = new StringTokenizer(strLine, "\t");
-			String prefix = tokenizer.nextToken();
-			String uri = tokenizer.nextToken();
-			prefixMap.put(prefix,uri);
-		}
-	}
+    public PrefixManager(InputStream in) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String strLine;
+        StringTokenizer tokenizer;
+        // Read File Line By Line
+        while ((strLine = br.readLine()) != null) {
+            tokenizer = new StringTokenizer(strLine, "\t");
+            String prefix = tokenizer.nextToken();
+            String uri = tokenizer.nextToken();
+            prefixMap.put(prefix, uri);
+        }
+    }
 
-	public String getUri(String prefix){
-		return prefixMap.get(prefix);
-	}
+    public String getUri(String prefix) {
+        return prefixMap.get(prefix);
+    }
 }
