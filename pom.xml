@@ -45,8 +45,7 @@
             <artifactId>openrefine</artifactId>
             <version>${openrefine.version}</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../OpenRefine/build/openrefine-2.7.jar</systemPath>
-            <!-- <systemPath>/opt/openrefine/build/openrefine-2.7.jar</systemPath> -->
+            <systemPath>${openrefine.basedir}/build/openrefine-${openrefine.version}.jar</systemPath>
         </dependency>
 
         <!-- openrefine dependencies -->
