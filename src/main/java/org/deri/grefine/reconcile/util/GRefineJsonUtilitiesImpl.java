@@ -11,24 +11,24 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ArrayNode;
-import org.codehaus.jackson.node.ObjectNode;
 import org.deri.grefine.reconcile.model.ReconciliationCandidate;
 import org.deri.grefine.reconcile.model.ReconciliationRequest;
 import org.deri.grefine.reconcile.model.ReconciliationResponse;
 import org.deri.grefine.reconcile.model.ReconciliationService;
 import org.deri.grefine.reconcile.model.SearchResultItem;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 public class GRefineJsonUtilitiesImpl implements GRefineJsonUtilities {
 
@@ -100,7 +100,7 @@ public class GRefineJsonUtilitiesImpl implements GRefineJsonUtilities {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readValue(queries, JsonNode.class);
-        Iterator<String> keysIter = root.getFieldNames();
+        Iterator<String> keysIter = root.fieldNames();
         while (keysIter.hasNext()) {
             String key = keysIter.next();
             // FIXME parsed twice

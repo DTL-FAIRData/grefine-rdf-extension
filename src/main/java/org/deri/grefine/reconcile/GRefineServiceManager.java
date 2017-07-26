@@ -14,15 +14,14 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.deri.grefine.reconcile.ServiceRegistry;
 import org.deri.grefine.reconcile.model.ReconciliationService;
 import org.deri.grefine.reconcile.util.GRefineJsonUtilitiesImpl;
 import org.deri.grefine.reconcile.util.PrefixManager;
-
 import org.json.JSONException;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class GRefineServiceManager {
 

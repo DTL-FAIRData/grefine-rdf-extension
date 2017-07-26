@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.node.ArrayNode;
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext.PropertyContext;
 
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 /**
  * @author fadmaa
@@ -76,7 +75,7 @@ public class ReconciliationRequest {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readValue(json, JsonNode.class);
         // get query
-        String query = node.path("query").getTextValue();
+        String query = node.path("query").textValue();
         // get types. can be a single string or an array of strings
         String[] types;
 
@@ -86,20 +85,20 @@ public class ReconciliationRequest {
                 ArrayNode typesNodeArray = (ArrayNode) typesNode;
                 types = new String[typesNodeArray.size()];
                 for (int i = 0; i < typesNodeArray.size(); i++) {
-                    types[i] = typesNodeArray.get(i).getTextValue();
+                    types[i] = typesNodeArray.get(i).textValue();
                 }
             } else {
-                types = new String[] {typesNode.getTextValue()};
+                types = new String[] {typesNode.textValue()};
             }
         } else {
             types = new String[] {};
         }
         // get limit
         int limit = node.path("limit").isMissingNode() ? getDefaultLimit(types.length)
-                : node.path("limit").getIntValue();
+                : node.path("limit").intValue();
         // get type_strict
         // TODO this is ignored for now
-        String type_strict = node.path("type_strict").getTextValue();
+        String type_strict = node.path("type_strict").textValue();
 
 
         // get context i.e. additional properties
@@ -114,7 +113,7 @@ public class ReconciliationRequest {
                     // only support strongly-identified properties
                     continue;
                 }
-                String pid = pidNode.getTextValue();
+                String pid = pidNode.textValue();
                 // get value
                 JsonNode valueNode = propertyNode.path("v");
                 JsonNode valueNodeId = valueNode.path("id");
@@ -122,11 +121,11 @@ public class ReconciliationRequest {
                 if (valueNodeId.isMissingNode()) {
                     // textual value
                     value = new ReconciliationRequestContext.TextualValueContext(
-                            valueNode.getTextValue());
+                            valueNode.textValue());
                 } else {
                     // identified value
                     value = new ReconciliationRequestContext.IdentifiedValueContext(
-                            valueNodeId.getTextValue());
+                            valueNodeId.textValue());
                 }
                 props.add(new PropertyContext(pid, value));
             }

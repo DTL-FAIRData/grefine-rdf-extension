@@ -17,9 +17,6 @@ import java.util.Set;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.deri.grefine.reconcile.model.ReconciliationRequest;
 import org.deri.grefine.reconcile.model.ReconciliationResponse;
 import org.deri.grefine.reconcile.model.ReconciliationService;
@@ -40,13 +37,15 @@ import org.deri.grefine.reconcile.rdf.factories.VirtuosoSparqlQueryFactory;
 import org.deri.grefine.reconcile.sindice.SindiceService;
 import org.deri.grefine.reconcile.util.GRefineJsonUtilities;
 import org.deri.grefine.reconcile.util.PrefixManager;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.JSONWriter;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
