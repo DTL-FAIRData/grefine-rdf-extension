@@ -3,3 +3,7 @@
 *.lock
 *.DS_Store
 module/MOD-INF/classes/*
+target
+.classpath
+.project
+.settings
