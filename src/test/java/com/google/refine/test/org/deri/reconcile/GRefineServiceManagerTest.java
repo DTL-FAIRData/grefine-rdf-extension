@@ -9,11 +9,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import org.json.JSONException;
-import org.json.JSONWriter;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import org.deri.grefine.reconcile.GRefineServiceManager;
 import org.deri.grefine.reconcile.ServiceRegistry;
 import org.deri.grefine.reconcile.model.ReconciliationRequest;
@@ -22,8 +17,14 @@ import org.deri.grefine.reconcile.rdf.RdfReconciliationService;
 import org.deri.grefine.reconcile.rdf.endpoints.QueryEndpointImpl;
 import org.deri.grefine.reconcile.rdf.executors.DumpQueryExecutor;
 import org.deri.grefine.reconcile.rdf.executors.RemoteQueryExecutor;
+import org.deri.grefine.reconcile.rdf.factories.JenaTextSparqlQueryFactory;
 // import org.deri.grefine.reconcile.rdf.factories.LarqSparqlQueryFactory;
 import org.deri.grefine.reconcile.util.GRefineJsonUtilitiesImpl;
+import org.json.JSONException;
+import org.json.JSONWriter;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
@@ -66,7 +67,7 @@ public class GRefineServiceManagerTest {
 		ServiceRegistry registry = new ServiceRegistry(new GRefineJsonUtilitiesImpl(),null);
 		GRefineServiceManager manager = new GRefineServiceManager(registry, dir);
 		
-		ReconciliationService service = new RdfReconciliationService(id, id, new QueryEndpointImpl(new LarqSparqlQueryFactory(), new RemoteQueryExecutor(url, null)), 0);
+		ReconciliationService service = new RdfReconciliationService(id, id, new QueryEndpointImpl(new JenaTextSparqlQueryFactory(), new RemoteQueryExecutor(url, null)), 0);
 		manager.addService(service);
 		
 		assertTrue(registry.hasService(id));
@@ -94,7 +95,7 @@ public class GRefineServiceManagerTest {
 		GRefineServiceManager manager = new GRefineServiceManager(registry, dir);
 		
 		Model m = ModelFactory.createDefaultModel();
-		ReconciliationService service = new RdfReconciliationService(id,id, new QueryEndpointImpl(new LarqSparqlQueryFactory(), 
+		ReconciliationService service = new RdfReconciliationService(id,id, new QueryEndpointImpl(new JenaTextSparqlQueryFactory(), 
 				new DumpQueryExecutor(m)), 0);
 		manager.addAndSaveService(service);
 		

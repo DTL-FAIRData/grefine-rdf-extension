@@ -1,21 +1,21 @@
 package com.google.refine.tests.rdf;
 
+import static org.testng.Assert.assertEquals;
+
 import java.io.StringWriter;
 import java.util.Properties;
 
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.deri.grefine.rdf.RdfSchema;
 import org.json.JSONObject;
 import org.json.JSONWriter;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.refine.util.ParsingUtilities;
-import org.deri.grefine.rdf.RdfSchema;
-
-import static org.testng.Assert.*;
 
 public class RdfSchemaSerializationTest {
 
@@ -42,11 +42,11 @@ public class RdfSchemaSerializationTest {
 	
 	void testJsonEquivalence(String actual, String expected)throws Exception{
 		ObjectMapper mapper = new ObjectMapper();
-		JsonFactory factory = mapper.getJsonFactory();
-		JsonParser jp = factory.createJsonParser(actual);
+		JsonFactory factory = mapper.getFactory();
+		JsonParser jp = factory.createParser(actual);
 		JsonNode actualObj = mapper.readTree(jp);
 		
-		jp = factory.createJsonParser(expected);
+		jp = factory.createParser(expected);
 		JsonNode  expectedObj = mapper.readTree(jp);
 		assertEquals(actualObj, expectedObj);
 	}

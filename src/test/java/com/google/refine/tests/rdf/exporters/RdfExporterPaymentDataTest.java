@@ -4,8 +4,16 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
+import org.deri.grefine.rdf.RdfSchema;
+import org.deri.grefine.rdf.app.ApplicationContext;
+import org.deri.grefine.rdf.exporters.RdfExporter;
+import org.deri.grefine.rdf.expr.RdfBinder;
+import org.deri.grefine.rdf.expr.functions.strings.Urlify;
+import org.json.JSONObject;
+import org.mockito.Mockito;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
@@ -20,13 +28,9 @@ import com.google.refine.ProjectMetadata;
 import com.google.refine.browsing.Engine;
 import com.google.refine.expr.ExpressionUtils;
 import com.google.refine.grel.ControlFunctionRegistry;
-import com.google.refine.importers.TsvCsvImporter;
+import com.google.refine.importers.SeparatorBasedImporter;
+import com.google.refine.importing.ImportingManager;
 import com.google.refine.model.Project;
-import org.deri.grefine.rdf.RdfSchema;
-import org.deri.grefine.rdf.app.ApplicationContext;
-import org.deri.grefine.rdf.exporters.RdfExporter;
-import org.deri.grefine.rdf.expr.RdfBinder;
-import org.deri.grefine.rdf.expr.functions.strings.Urlify;
 import com.google.refine.util.ParsingUtilities;
 
 public class RdfExporterPaymentDataTest {
@@ -52,7 +56,16 @@ public class RdfExporterPaymentDataTest {
 		
 		Properties options = new Properties();
 //		options.put("ignore", "1");
-		new TsvCsvImporter().read(in, project,meta, options);
+		//new TsvCsvImporter().read(in, project,meta, options);
+		new SeparatorBasedImporter().parseOneFile(
+		        project,
+		        meta,
+		        ImportingManager.createJob(),
+		        "file-source",
+		        in,
+		        -1,
+		        Mockito.mock(JSONObject.class),
+		        new ArrayList<Exception>());
 		project.update();
 		//Guard assertion
 		assertEquals(project.rows.size(),2);
@@ -70,7 +83,8 @@ public class RdfExporterPaymentDataTest {
 		//export the project
 		engine = new Engine(project);
 		exporter = new RdfExporter(ctxt,RDFFormat.RDFXML);
-		model = exporter.buildModel(project, engine, schema);
+		//model = exporter.buildModel(project, engine, schema);
+		model = exporter.exportModel(project, engine, schema, null);
 	}
 	
 	@Test(groups={"rdf-schema-test"})

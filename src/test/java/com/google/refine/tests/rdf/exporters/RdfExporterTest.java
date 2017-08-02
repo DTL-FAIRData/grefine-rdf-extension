@@ -59,7 +59,8 @@ public class RdfExporterTest {
 		ExpressionUtils.registerBinder(new RdfBinder(ctxt));
 	
 		
-		model = exporter.buildModel(project, engine,schema);
+		//model = exporter.buildModel(project, engine,schema);
+		model = exporter.exportModel(project, engine, schema, null);
 		
 		assertEquals(project.rows.size(),2);
 		assertEquals(project.columnModel.getColumnIndexByName("Job Title"),3);

@@ -9,10 +9,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import com.google.common.collect.ImmutableList;
 import org.deri.grefine.reconcile.model.ReconciliationRequest;
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext;
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext.IdentifiedValueContext;
@@ -20,7 +16,11 @@ import org.deri.grefine.reconcile.model.ReconciliationRequestContext.PropertyCon
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext.TextualValueContext;
 import org.deri.grefine.reconcile.rdf.executors.DumpQueryExecutor;
 import org.deri.grefine.reconcile.rdf.executors.QueryExecutor;
-import org.deri.grefine.reconcile.rdf.factories.LarqSparqlQueryFactory;
+import org.deri.grefine.reconcile.rdf.factories.JenaTextSparqlQueryFactory;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.google.common.collect.ImmutableList;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -32,10 +32,10 @@ import com.hp.hpl.jena.rdf.model.Resource;
  * this class mainly tests that queries produced by {@link org.deri.refine.reconcile.rdf.factories.LarqSparqlQueryFactory LarqSparqlQueryFactory}
  * are correct (executable)
  */
-public class LarqSparqlQueryExecutorTest {
+public class JenaTextSparqlQueryExecutorTest {
 
 	QueryExecutor executor;
-	LarqSparqlQueryFactory factory;
+	JenaTextSparqlQueryFactory factory;
 	
 	//query
 	int limit =8;
@@ -50,7 +50,7 @@ public class LarqSparqlQueryExecutorTest {
 		m.read(in,null,"TTL");
 		
 		executor = new DumpQueryExecutor(m);
-		factory = new LarqSparqlQueryFactory();
+		factory = new JenaTextSparqlQueryFactory();
 	}
 	
 	@Test
