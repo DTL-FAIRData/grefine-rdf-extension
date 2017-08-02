@@ -31,7 +31,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 public class GRefineServiceManagerTest {
 
 	String url = "http://example.org/endpoint";
-	File dir = new File("tmp");
+	File dir = new File("target/tmp");
 	
 	@BeforeClass
 	public void setUp() throws IOException{
