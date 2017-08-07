@@ -50,8 +50,8 @@ public class RdfExporterFacultyDataTest {
 		exporter = new RdfExporter(ctxt,RDFFormat.RDFXML);
 		ControlFunctionRegistry.registerFunction("urlify", new Urlify());
 		ExpressionUtils.registerBinder(new RdfBinder(ctxt));
-			    
-		model = exporter.buildModel(project, engine, schema);
+	    
+		model = exporter.exportModel(project, engine, schema, null);
 		
 		assertEquals(project.rows.size(),3);
 		assertEquals(project.columnModel.getColumnIndexByName("Advisor"),5);

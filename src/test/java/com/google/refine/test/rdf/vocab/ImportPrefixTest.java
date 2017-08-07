@@ -24,7 +24,7 @@ public class ImportPrefixTest {
 	@Test
 	public void testImportAndSeach()throws Exception{
 		VocabularyImporter fakeImporter = new FakeImporter();
-		VocabularySearcher searcher = new VocabularySearcher(new File("tmp"));
+		VocabularySearcher searcher = new VocabularySearcher(new File("target/tmp"));
 		searcher.importAndIndexVocabulary("foaf", "http://xmlns.com/foaf/0.1/", "http://xmlns.com/foaf/0.1/","1", fakeImporter);
 		
 		assertFalse(searcher.searchClasses("foaf:P", "1").isEmpty());

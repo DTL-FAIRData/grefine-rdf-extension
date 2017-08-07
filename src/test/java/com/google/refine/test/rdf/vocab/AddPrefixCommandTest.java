@@ -24,7 +24,7 @@ import org.deri.grefine.rdf.vocab.imp.VocabularySearcher;
 import static org.testng.Assert.*;
 
 public class AddPrefixCommandTest{
-	private static final String TEMP_TEST_DIRECTORY = "tmp_VocabularySearchRelatedCommandsTest";
+	private static final String TEMP_TEST_DIRECTORY = "target/tmp_VocabularySearchRelatedCommandsTest";
 	ApplicationContext ctxt;
 	VocabularySearcher searcher;
 	VocabularyImporter importer;

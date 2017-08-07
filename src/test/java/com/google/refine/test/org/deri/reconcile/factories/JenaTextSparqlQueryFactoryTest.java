@@ -2,20 +2,19 @@ package com.google.refine.test.org.deri.reconcile.factories;
 
 import static org.testng.Assert.assertEquals;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import com.google.common.collect.ImmutableList;
 import org.deri.grefine.reconcile.model.ReconciliationRequest;
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext;
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext.IdentifiedValueContext;
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext.PropertyContext;
 import org.deri.grefine.reconcile.model.ReconciliationRequestContext.TextualValueContext;
-import org.deri.grefine.reconcile.rdf.factories.LarqSparqlQueryFactory;
+import org.deri.grefine.reconcile.rdf.factories.JenaTextSparqlQueryFactory;
 import org.deri.grefine.reconcile.rdf.factories.SparqlQueryFactory;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
+import com.google.common.collect.ImmutableList;
 
-public class LarqSparqlQueryFactoryTest {
+public class JenaTextSparqlQueryFactoryTest {
 
 	int limit = 10;
 	String query = "Fadi Maali";
@@ -23,7 +22,7 @@ public class LarqSparqlQueryFactoryTest {
 	
 	@BeforeMethod
 	public void setUp(){
-		factory = new LarqSparqlQueryFactory();
+		factory = new JenaTextSparqlQueryFactory();
 	}
 	
 	
