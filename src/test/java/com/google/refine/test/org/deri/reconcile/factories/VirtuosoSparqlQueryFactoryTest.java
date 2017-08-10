@@ -163,7 +163,7 @@ public class VirtuosoSparqlQueryFactoryTest {
 	 * ENTITY SEARCH
 	 */
 
-	@Test 
+	@Test(enabled = false)
 	public void entitySearchTest(){
 		ImmutableList<String> searchPropertyUris = ImmutableList.of("http://www.w3.org/2000/01/rdf-schema#label", "http://www.w3.org/2004/02/skos/core#prefLabel");
 		String prefix = "fad";

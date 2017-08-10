@@ -43,7 +43,7 @@ public class AddPrefixCommandTest{
 		ctxt.setVocabularySearcher(searcher);
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void testAddPrefixCommand() throws Exception{
 		RdfSchema schema = new RdfSchema();
 		AddPrefixCommand command = new FakeAddPrefixCommand(ctxt,schema);
