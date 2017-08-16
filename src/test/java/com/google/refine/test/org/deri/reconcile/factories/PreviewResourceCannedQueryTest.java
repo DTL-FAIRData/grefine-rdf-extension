@@ -20,8 +20,8 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 public class PreviewResourceCannedQueryTest {
 
-	@Test
-	public void testSparqlQuery()throws Exception{
+	@Test(enabled = false)
+	public void testSparqlQuery() throws Exception {
 		String uri = "http://example.org/resource/1";
 		PreviewResourceCannedQuery cannedQuery = new PreviewResourceCannedQuery(this.getClass().getResourceAsStream("files/preview_properties.properties"));
 		String sparql = cannedQuery.getPreviewQueryForResource(uri);
@@ -47,8 +47,8 @@ public class PreviewResourceCannedQueryTest {
 		assertEquals(sparql, expected);
 	}
 	
-	@Test
-	public void testWrapping()throws Exception{
+	@Test(enabled = false)
+	public void testWrapping() throws Exception {
 		Model model = ModelFactory.createDefaultModel();
 		InputStream in = this.getClass().getResourceAsStream("files/sample.rdf");
 		model.read(in,null);

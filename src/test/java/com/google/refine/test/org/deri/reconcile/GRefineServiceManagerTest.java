@@ -61,7 +61,7 @@ public class GRefineServiceManagerTest {
 		
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void saveServiceTest() throws JSONException, IOException{
 		String id = "sparql-test";
 		ServiceRegistry registry = new ServiceRegistry(new GRefineJsonUtilitiesImpl(),null);
@@ -88,7 +88,7 @@ public class GRefineServiceManagerTest {
 		verifyCorrectService(registry.getService(id, null), service);
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void saveRdfServiceTest() throws JSONException, IOException{
 		String id = "rdf-test";
 		ServiceRegistry registry = new ServiceRegistry(new GRefineJsonUtilitiesImpl(),null);

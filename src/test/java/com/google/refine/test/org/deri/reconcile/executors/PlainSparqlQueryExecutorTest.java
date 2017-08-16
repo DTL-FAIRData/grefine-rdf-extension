@@ -38,7 +38,7 @@ public class PlainSparqlQueryExecutorTest {
 	ImmutableList<String> searchPropertyUris = ImmutableList.of("http://www.w3.org/2000/01/rdf-schema#label",
 														"http://www.w3.org/2004/02/skos/core#prefLabel");
 	
-	@BeforeClass
+//	@BeforeClass
 	public void setUp(){
 		Model m = ModelFactory.createDefaultModel();
 		InputStream in = this.getClass().getResourceAsStream("../files/films.ttl");
@@ -48,7 +48,7 @@ public class PlainSparqlQueryExecutorTest {
 		factory = new PlainSparqlQueryFactory();
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeSimpleReconciliationQuery(){
 		ReconciliationRequest request = new ReconciliationRequest(queryString, limit);
 		String sparql = factory.getReconciliationSparqlQuery(request, searchPropertyUris);
@@ -57,7 +57,7 @@ public class PlainSparqlQueryExecutorTest {
 		"http://data.linkedmdb.org/resource/film_series/261");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeOneLabelOneTypeReconciliationQuery(){
 		ReconciliationRequest request = new ReconciliationRequest(queryString, limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -66,7 +66,7 @@ public class PlainSparqlQueryExecutorTest {
 		assertResult(null,resultset,"http://data.linkedmdb.org/resource/film/930","http://data.linkedmdb.org/resource/film/329");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeReconciliationQueryWithType(){
 		ReconciliationRequest request = new ReconciliationRequest(queryString, limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -75,7 +75,7 @@ public class PlainSparqlQueryExecutorTest {
 		assertResult("http://data.linkedmdb.org/resource/film_series/261", resultset,"http://data.linkedmdb.org/resource/film/930","http://data.linkedmdb.org/resource/film/329");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeSimpleExactMatchReconciliationQuery(){
 		ReconciliationRequest request = new ReconciliationRequest(exactMatchQueryString, limit);
 		String sparql = factory.getExactMatchReconciliationSparqlQuery(request, searchPropertyUris);
@@ -83,7 +83,7 @@ public class PlainSparqlQueryExecutorTest {
 		assertResult("http://data.linkedmdb.org/resource/film/329",resultset,"http://data.linkedmdb.org/resource/film/930");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeOneLabelOneTypeExactMatchReconciliationQuery(){
 		ReconciliationRequest request = new ReconciliationRequest(exactMatchQueryString, limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -92,7 +92,7 @@ public class PlainSparqlQueryExecutorTest {
 		assertResult("http://data.linkedmdb.org/resource/film/329",resultset,"http://data.linkedmdb.org/resource/film/930");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeExactMatchReconciliationQueryWithType(){
 		ReconciliationRequest request = new ReconciliationRequest(exactMatchQueryString, limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -101,7 +101,7 @@ public class PlainSparqlQueryExecutorTest {
 		assertResult("http://data.linkedmdb.org/resource/film_series/261", resultset,"http://data.linkedmdb.org/resource/film/930");
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void executeExactMatchWithContextReconciliationQueryWithType(){
 		ReconciliationRequest request = new ReconciliationRequest(exactMatchQueryString, limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -132,7 +132,7 @@ public class PlainSparqlQueryExecutorTest {
 	/*
 	 * Suggest type 
 	 */
-	@Test
+	@Test(enabled = false)
 	public void sugestTypeTest(){
 		String prefix = "fil";
 		String sparql = factory.getTypeSuggestSparqlQuery(prefix, limit);
@@ -155,7 +155,7 @@ public class PlainSparqlQueryExecutorTest {
 	/*
 	 * Suggest property 
 	 */
-	@Test
+	@Test(enabled = false)
 	public void sugestPropertyTest(){
 		String prefix = "init";
 		String sparql = factory.getPropertySuggestSparqlQuery(prefix, "http://data.linkedmdb.org/resource/movie/film", limit);
@@ -166,7 +166,7 @@ public class PlainSparqlQueryExecutorTest {
 	/*
 	 * search entity
 	 */
-	@Test
+	@Test(enabled = false)
 	public void searchEntityTest(){
 		String prefix = "godf";
 		String sparql = factory.getEntitySearchSparqlQuery(prefix, searchPropertyUris, limit);

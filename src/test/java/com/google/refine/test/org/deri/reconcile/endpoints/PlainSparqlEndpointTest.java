@@ -39,7 +39,7 @@ public class PlainSparqlEndpointTest {
 	ImmutableList<String> searchPropertyUris = ImmutableList.of("http://www.w3.org/2000/01/rdf-schema#label",
 																"http://www.w3.org/2004/02/skos/core#prefLabel");
 	
-	@BeforeMethod
+//	@BeforeMethod
 	public void setUp(){
 		Model m = ModelFactory.createDefaultModel();
 		InputStream in = this.getClass().getResourceAsStream("../files/films.ttl");
@@ -50,7 +50,7 @@ public class PlainSparqlEndpointTest {
 		endpoint = new PlainSparqlQueryEndpoint(factory, executor);
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeSimpleReconciliationQuery(){
 		ReconciliationRequest request = new ReconciliationRequest(queryString, limit);
 		List<ReconciliationCandidate> candidates = endpoint.reconcileEntities(request, searchPropertyUris, 1.0);
@@ -58,7 +58,7 @@ public class PlainSparqlEndpointTest {
 			"http://data.linkedmdb.org/resource/film_series/261");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeSimpleReconciliationQueryWithType(){
 		ReconciliationRequest request = new ReconciliationRequest(queryString, limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -66,7 +66,7 @@ public class PlainSparqlEndpointTest {
 		assertResultInOrder("http://data.linkedmdb.org/resource/film_series/261",candidates,"http://data.linkedmdb.org/resource/film/930","http://data.linkedmdb.org/resource/film/329");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeExactMatchReconciliationQueryWithType(){
 		ReconciliationRequest request = new ReconciliationRequest(exactMatchQueryString, limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -75,14 +75,14 @@ public class PlainSparqlEndpointTest {
 		asserrtResultContainsWithScoreOne(candidates,"http://data.linkedmdb.org/resource/film/930");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void executeExactMatchReconciliationQuery(){
 		ReconciliationRequest request = new ReconciliationRequest(exactMatchQueryString, limit);
 		List<ReconciliationCandidate> candidates = endpoint.reconcileEntities(request, searchPropertyUris, 1.0);
 		asserrtResultContainsWithScoreOne(candidates,"http://data.linkedmdb.org/resource/film/930");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void noMoreThanOneMatch(){
 		ReconciliationRequest request = new ReconciliationRequest("Anjali", limit);
 		request.setTypes(new String[] {"http://data.linkedmdb.org/resource/movie/film"});
@@ -181,7 +181,7 @@ public class PlainSparqlEndpointTest {
 	/*
 	 * suggest type
 	 */
-	@Test
+	@Test(enabled = false)
 	public void sugestTypeTest(){
 		String prefix = "fil";
 		List<SearchResultItem> results = endpoint.suggestType(prefix, limit);
@@ -199,7 +199,7 @@ public class PlainSparqlEndpointTest {
 	/*
 	 * suggest property
 	 */
-	@Test
+	@Test(enabled = false)
 	public void suggestPropertyTest(){
 		String prefix = "initi";
 		List<SearchResultItem> results = endpoint.suggestProperty(prefix, limit);
@@ -209,7 +209,7 @@ public class PlainSparqlEndpointTest {
 		assertResultItem(item,"http://data.linkedmdb.org/resource/movie/initial_release_date","initial release date");
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void suggestPropertyEmptyResultTest(){
 		String prefix = "initi";
 		String typeUri = "http://data.linkedmdb.org/resource/movie/film_series";
